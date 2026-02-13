@@ -11,9 +11,9 @@ export async function GET(request: Request) {
   const session = await auth();
   if (!session?.user?.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const items = await db.select().from(PullRequestsInsights)
-    .where(eq(PullRequestsInsights.userId, session.user.id))
-    .orderBy(desc(PullRequestsInsights.createdAt))
+  const items = await db.select().from(pullRequestsInsights)
+    .where(eq(pullRequestsInsights.userId, session.user.id))
+    .orderBy(desc(pullRequestsInsights.createdAt))
     .limit(100);
 
   return NextResponse.json({ items, count: items.length });
@@ -26,7 +26,7 @@ export async function POST(request: Request) {
   const body = await request.json();
   const id = randomUUID();
 
-  const [item] = await db.insert(PullRequestsInsights).values({
+  const [item] = await db.insert(pullRequestsInsights).values({
     id,
     userId: session.user.id,
     ...body,
