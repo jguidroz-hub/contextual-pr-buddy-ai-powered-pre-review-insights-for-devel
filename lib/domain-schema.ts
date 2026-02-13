@@ -52,3 +52,10 @@ export const pullRequests = pgTable('pull_requests', {
 
 // Alias for route compatibility
 export const prInsights = userSettings;
+
+export const repositoriesConnect = pgTable('repositories_connect', {
+  id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
+  userId: text('user_id').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
