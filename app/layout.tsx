@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Contextual PR Buddy - AI-powered pre-review insights for developers',
-  description: 'Value Proposition: Provides developers with automated, context-aware suggestions and potential issues *before* submitting a pull request, ensuring higher code quality and faster review cycles for dev teams.',
+  description: 'Value Proposition: Provides developers with automated, context-aware suggestions and potential issue',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
