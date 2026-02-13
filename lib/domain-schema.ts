@@ -49,3 +49,6 @@ export const pullRequests = pgTable('pull_requests', {
   createdAt: timestamp('created_at').default(sql`now()`),
   updatedAt: timestamp('updated_at').default(sql`now()`),
 });
+
+// Alias for route compatibility
+export const prInsights = userSettings;
