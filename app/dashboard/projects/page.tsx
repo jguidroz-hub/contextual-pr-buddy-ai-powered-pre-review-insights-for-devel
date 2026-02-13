@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
-interface PullRequestsItem {
+interface ProjectsItem {
   id: string;
   title?: string;
   status?: string;
@@ -10,14 +10,14 @@ interface PullRequestsItem {
   [key: string]: any;
 }
 
-export default function PullRequestsPage() {
-  const [items, setItems] = useState<PullRequestsItem[]>([]);
+export default function ProjectsPage() {
+  const [items, setItems] = useState<ProjectsItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [showCreate, setShowCreate] = useState(false);
   const [newTitle, setNewTitle] = useState('');
 
   useEffect(() => {
-    fetch('/api/pull-requests')
+    fetch('/api/projects')
       .then(r => r.json())
       .then(data => { setItems(data.items || []); setLoading(false); })
       .catch(() => setLoading(false));
@@ -25,7 +25,7 @@ export default function PullRequestsPage() {
 
   const handleCreate = async () => {
     if (!newTitle.trim()) return;
-    const res = await fetch('/api/pull-requests', {
+    const res = await fetch('/api/projects', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title: newTitle }),
@@ -39,7 +39,7 @@ export default function PullRequestsPage() {
   };
 
   const handleDelete = async (id: string) => {
-    await fetch(`/api/pull-requests/${id}`, { method: 'DELETE' });
+    await fetch(`/api/projects/${id}`, { method: 'DELETE' });
     setItems(prev => prev.filter(i => i.id !== id));
   };
 
@@ -52,7 +52,7 @@ export default function PullRequestsPage() {
   return (
     <div className="max-w-4xl mx-auto p-6">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">PR Insights</h1>
+        <h1 className="text-2xl font-bold">Tracked Projects</h1>
         <button
           onClick={() => setShowCreate(!showCreate)}
           className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
@@ -61,7 +61,7 @@ export default function PullRequestsPage() {
         </button>
       </div>
 
-      <p className="text-gray-600 mb-6">Automated pre-review code analysis</p>
+      <p className="text-gray-600 mb-6">Manage connected code repositories</p>
 
       {showCreate && (
         <div className="mb-6 p-4 border rounded-lg bg-gray-50">

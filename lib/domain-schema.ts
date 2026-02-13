@@ -25,29 +25,27 @@ export const auditLog = pgTable('audit_log', {
   createdAt: timestamp('created_at').notNull().default(sql`now()`),
 });
 
-// Tracks pull request submissions and AI analysis results
-export const pullRequests = pgTable('pull_requests', {
-  id: text('id').primaryKey(),
-  userId: text('user_id').references(() => users.id, { onDelete: 'cascade' }),
-  repoUrl: text('repo_url').notNull(),
-  branchName: text('branch_name').notNull(),
-  commitHash: text('commit_hash').notNull(),
-  analysisStatus: text('analysis_status').default(pending),
-  aiInsights: jsonb('ai_insights'),
-  codeComplexity: text('code_complexity'),
-  potentialIssues: jsonb('potential_issues'),
-  createdAt: timestamp('created_at').notNull(),
-  updatedAt: timestamp('updated_at').notNull(),
+// Repositories or code projects tracked by the PR Buddy system
+export const projects = pgTable('projects', {
+  id: text('id').primaryKey().notNull(),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  repoUrl: text('repo_url').notNull().unique(),
+  name: text('name').notNull(),
+  language: text('language').notNull(),
+  analysisConfig: jsonb('analysis_config'),
+  createdAt: timestamp('created_at').default(sql`now()`),
+  updatedAt: timestamp('updated_at').default(sql`now()`),
 });
 
-// Tracks connected GitHub/GitLab repositories
-export const repositories = pgTable('repositories', {
-  id: text('id').primaryKey(),
-  userId: text('user_id').references(() => users.id, { onDelete: 'cascade' }),
-  provider: text('provider').notNull(),
-  repoName: text('repo_name').notNull(),
-  repoUrl: text('repo_url').notNull().unique(),
-  accessToken: text('access_token').notNull(),
-  createdAt: timestamp('created_at').notNull(),
-  updatedAt: timestamp('updated_at').notNull(),
+// PR analysis and insights tracked by the system
+export const pullRequests = pgTable('pull_requests', {
+  id: text('id').primaryKey().notNull(),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  projectId: text('project_id').notNull().references(() => projects.id, { onDelete: 'cascade' }),
+  prUrl: text('pr_url').notNull().unique(),
+  analysisResults: jsonb('analysis_results'),
+  riskScore: text('risk_score').notNull().default(0),
+  status: text('status').notNull().default('pending'),
+  createdAt: timestamp('created_at').default(sql`now()`),
+  updatedAt: timestamp('updated_at').default(sql`now()`),
 });

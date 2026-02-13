@@ -28,13 +28,13 @@ export default function DashboardPage() {
 
       <h2 className="text-lg font-semibold mb-4">Quick Access</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
-          <a href="/dashboard/pull-requests" className="block p-4 border rounded-lg hover:bg-blue-50 transition">
-            <h3 className="font-medium">Pull Request Insights</h3>
-            <p className="text-sm text-gray-500">View AI-powered code review suggestions</p>
-          </a>
-          <a href="/dashboard/repositories" className="block p-4 border rounded-lg hover:bg-blue-50 transition">
-            <h3 className="font-medium">Connected Repositories</h3>
+          <a href="/dashboard/projects" className="block p-4 border rounded-lg hover:bg-blue-50 transition">
+            <h3 className="font-medium">Tracked Projects</h3>
             <p className="text-sm text-gray-500">Manage connected code repositories</p>
+          </a>
+          <a href="/dashboard/pull-requests" className="block p-4 border rounded-lg hover:bg-blue-50 transition">
+            <h3 className="font-medium">PR Insights</h3>
+            <p className="text-sm text-gray-500">Automated pre-review code analysis</p>
           </a>
         <a href="/dashboard/settings" className="block p-4 border rounded-lg hover:bg-blue-50 transition">
           <h3 className="font-medium">Settings</h3>
