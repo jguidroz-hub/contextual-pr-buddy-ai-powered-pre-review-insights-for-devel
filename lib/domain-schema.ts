@@ -44,7 +44,7 @@ export const pullRequests = pgTable('pull_requests', {
   projectId: text('project_id').notNull().references(() => projects.id, { onDelete: 'cascade' }),
   prUrl: text('pr_url').notNull().unique(),
   analysisResults: jsonb('analysis_results'),
-  riskScore: text('risk_score').notNull().default(0),
+  riskScore: text('risk_score').notNull().default('0'),
   status: text('status').notNull().default('pending'),
   createdAt: timestamp('created_at').default(sql`now()`),
   updatedAt: timestamp('updated_at').default(sql`now()`),
